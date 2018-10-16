@@ -15,7 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from registration_login.serializers import UserSerializer
+from django.urls import path, include
+from rest_framework import routers
+from registration_login import views
+
+router = routers.DefaultRouter()
+router.register(r'user', views.UserViewSets)
+
 
 urlpatterns = [
+	url(r'^', include(router.urls)),
     url(r'^admin/', admin.site.urls),
+    path('api-auth/' , include('rest_framework.urls', namespace = 'rest_framework'))
 ]
